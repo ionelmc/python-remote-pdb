@@ -11,7 +11,9 @@ from contextlib import closing
 from process_tests import ProcessTestCase
 from process_tests import setup_coverage
 from process_tests import TestProcess
+from remote_pdb import PY3
 from remote_pdb import set_trace
+
 
 #import aspectlib
 #import aspectlib.debug
@@ -39,7 +41,10 @@ class RemotePDBTestCase(ProcessTestCase):
                 )
                 host, port = re.findall("RemotePdb session open at (.+):(.+),", proc.read())[0]
                 with closing(socket.create_connection((host, int(port)), timeout=TIMEOUT)) as conn:
-                    fh = conn.makefile(bufsize=0)
+                    if PY3:
+                        fh = conn.makefile('rw', buffering=1)
+                    else:
+                        fh = conn.makefile(bufsize=0)
                     self.wait_for_strings(proc.read, TIMEOUT, 'accepted connection from')
                     fh.readline()
                     self.assertEqual("-> print('{b2}')", fh.readline().strip())
@@ -60,7 +65,10 @@ class RemotePDBTestCase(ProcessTestCase):
                 )
                 host, port = re.findall("RemotePdb session open at (.+):(.+),", proc.read())[0]
                 with closing(socket.create_connection((host, int(port)), timeout=TIMEOUT)) as conn:
-                    fh = conn.makefile(bufsize=0)
+                    if PY3:
+                        fh = conn.makefile('rw', buffering=1)
+                    else:
+                        fh = conn.makefile(bufsize=0)
                     self.wait_for_strings(proc.read, TIMEOUT, 'accepted connection from')
                     fh.readline()
                     self.assertEqual("-> print('{b2}')", fh.readline().strip())

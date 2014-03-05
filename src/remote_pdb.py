@@ -7,6 +7,7 @@ import socket
 import sys
 from pdb import Pdb
 
+PY3 = sys.version_info[0] == 3
 
 def cry(message, stderr=sys.__stderr__):
     logging.critical(message)
@@ -57,7 +58,10 @@ class RemotePdb(Pdb):
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         cry("RemotePdb accepted connection from %s." % repr(address))
-        self.handle = LF2CRLF_FileWrapper(connection.makefile(bufsize=0))
+        if PY3:
+            self.handle = LF2CRLF_FileWrapper(connection.makefile('rw', buffering=1))
+        else:
+            self.handle = LF2CRLF_FileWrapper(connection.makefile(bufsize=0))
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:
