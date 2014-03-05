@@ -1,14 +1,36 @@
 from __future__ import print_function
-from pdb import Pdb
-import socket
-import logging
-import sys
+
 import errno
+import logging
+import re
+import socket
+import sys
+from pdb import Pdb
 
 
 def cry(message, stderr=sys.__stderr__):
     logging.critical(message)
     print(message, file=stderr)
+
+
+class LF2CRLF_FileWrapper(object):
+    def __init__(self, fh):
+        self.fh = fh
+        self.read = fh.read
+        self.readline = fh.readline
+        self.readlines = fh.readlines
+        self.close = fh.close
+        self.flush = fh.flush
+        self.fileno = fh.fileno
+
+    def __iter__(self):
+        return self.fh.__iter__()
+
+    def write(self, data, nl_rex=re.compile("\r?\n")):
+        return self.fh.write(nl_rex.sub("\r\n", data))
+
+    def writelines(self, lines, nl_rex=re.compile("\r?\n")):
+        return self.fh.writelines(nl_rex.sub("\r\n", line) for line in lines)
 
 
 class RemotePdb(Pdb):
@@ -35,7 +57,7 @@ class RemotePdb(Pdb):
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         cry("RemotePdb accepted connection from %s." % repr(address))
-        self.handle = connection.makefile('rwU')
+        self.handle = LF2CRLF_FileWrapper(connection.makefile(bufsize=0))
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:
