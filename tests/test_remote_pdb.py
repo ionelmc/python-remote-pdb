@@ -13,19 +13,20 @@ from process_tests import setup_coverage
 from process_tests import TestProcess
 from remote_pdb import set_trace
 
-import aspectlib
-import aspectlib.debug
-aspectlib.weave(
-    (socket.socket, socket._fileobject),
-    aspectlib.debug.log(
-        module=False,
-        stacktrace=3,
-    ),
-    #only_methods=['send', 'recv', 'sendall', 'accept', 'connect'],
-    on_init=True
-)
+#import aspectlib
+#import aspectlib.debug
+#aspectlib.weave(
+#    (socket.socket, socket._fileobject),
+#    aspectlib.debug.log(
+#        module=False,
+#        stacktrace=3,
+#    ),
+#    #only_methods=['send', 'recv', 'sendall', 'accept', 'connect'],
+#    on_init=True
+#)
 
 TIMEOUT = int(os.getenv('REMOTE_PDB_TEST_TIMEOUT', 10))
+
 
 class RedisLockTestCase(ProcessTestCase):
     def test_simple(self):
@@ -38,7 +39,7 @@ class RedisLockTestCase(ProcessTestCase):
                 )
                 host, port = re.findall("RemotePdb session open at (.+):(.+),", proc.read())[0]
                 with closing(socket.create_connection((host, int(port)), timeout=TIMEOUT)) as conn:
-                    fh = conn.makefile('rwU')
+                    fh = conn.makefile(bufsize=0)
                     self.wait_for_strings(proc.read, TIMEOUT, 'accepted connection from')
                     fh.readline()
                     self.assertEqual("-> print('{b2}')", fh.readline().strip())
@@ -59,21 +60,23 @@ class RedisLockTestCase(ProcessTestCase):
                 )
                 host, port = re.findall("RemotePdb session open at (.+):(.+),", proc.read())[0]
                 with closing(socket.create_connection((host, int(port)), timeout=TIMEOUT)) as conn:
-                    fh = conn.makefile('rwU')
+                    fh = conn.makefile(bufsize=0)
                     self.wait_for_strings(proc.read, TIMEOUT, 'accepted connection from')
                     fh.readline()
                     self.assertEqual("-> print('{b2}')", fh.readline().strip())
                     fh.write('break func_a\r\n')
                     fh.write('continue\r\n')
                     fh.readline()
+                    fh.readline()
                     self.assertEqual("-> print('{a2}')", fh.readline().strip())
                     fh.write('continue\n')
                     self.assertEqual("(Pdb)", fh.readline().strip())
 
                 self.wait_for_strings(proc.read, TIMEOUT,
-                    'Restoring streams',
                     'DIED.',
                 )
+                self.assertNotIn('Restoring streams', proc.read())
+
 
 def func_b():
     print('{b1}')
