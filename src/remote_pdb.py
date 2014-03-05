@@ -35,7 +35,7 @@ class RemotePdb(Pdb):
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         cry("RemotePdb accepted connection from %s." % repr(address))
-        self.handle = connection.makefile('rw')
+        self.handle = connection.makefile('rwU')
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:
@@ -86,4 +86,3 @@ def set_trace(host='127.0.0.1', port=0):
     """
     rdb = RemotePdb(host, port)
     rdb.set_trace()
-
