@@ -1,0 +1,44 @@
+language: python
+os:
+  - linux
+  - osx
+python:
+  - "2.7"
+  - "2.6"
+  - "3.3"
+  - "pypy"
+env:
+  global:
+    PYTHONPATH=src:tests
+    PYTHONUNBUFFERED=yes
+    REMOTE_PDB_TEST_TIMEOUT=10
+  matrix:
+    - WITH_COVERAGE=no
+    - WITH_COVERAGE=yes
+before_install:
+  - |
+    if python --version |& grep PyPy; then
+      deactivate
+      sudo apt-add-repository --yes ppa:pypy/ppa
+      sudo apt-get update
+      sudo apt-get install pypy
+      source ~/virtualenv/pypy/bin/activate
+    fi
+    python --version
+    uname -a
+    lsb_release -a
+install:
+  - pip install tox
+script:
+  - |
+    if [[ $WITH_COVERAGE == yes ]]; then
+      tox -v -e $TRAVIS_PYTHON_VERSION -- nosetests --with-cov --cover-branch --cover-erase --cover-package=remote_pdb\*
+    else
+      tox -v -e $TRAVIS_PYTHON_VERSION
+    fi
+after_success:
+  - .tox/$TRAVIS_PYTHON_VERSION/bin/coveralls
+notifications:
+  email:
+    on_success: never
+    on_failure: always
