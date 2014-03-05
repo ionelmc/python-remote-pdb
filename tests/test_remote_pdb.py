@@ -28,7 +28,7 @@ from remote_pdb import set_trace
 TIMEOUT = int(os.getenv('REMOTE_PDB_TEST_TIMEOUT', 10))
 
 
-class RedisLockTestCase(ProcessTestCase):
+class RemotePDBTestCase(ProcessTestCase):
     def test_simple(self):
         with TestProcess(sys.executable, __file__, 'daemon', 'test_simple') as proc:
             with self.dump_on_error(proc.read):
