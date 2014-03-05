@@ -5,7 +5,7 @@ import os
 
 setup(
     name="python-remote-pdb",
-    version="0.1.0",
+    version="0.2.0",
     url='https://github.com/ionelmc/python-remote-pdb',
     download_url='',
     license='BSD',
