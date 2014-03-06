@@ -1,11 +1,11 @@
 # -*- encoding: utf8 -*-
-from setuptools import setup, find_packages
+from setuptools import setup
 
 import os
 
 setup(
     name="remote-pdb",
-    version="0.2.0",
+    version="0.2.1",
     url='https://github.com/ionelmc/python-remote-pdb',
     download_url='',
     license='BSD',
@@ -32,12 +32,6 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
-    install_requires=[
-        'redis>=2.7.4',
-    ],
-    extras_require={
-        'django': [
-            'django-redis>=3.3',
-        ]
-    }
+    install_requires=[],
+    extras_require={}
 )
