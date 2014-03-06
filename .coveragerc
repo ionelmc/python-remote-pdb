@@ -1,5 +1,7 @@
 [run]
-source = src
+source = remote_pdb
+#debug = trace,config,sys,dataio,pid
+parallel = true
 [report]
 show_missing = true
-omit = */python?.?/*,*/site-packages/*,*/pypy/*
+include = */remote_pdb.py

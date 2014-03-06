@@ -32,13 +32,13 @@ install:
 script:
   - |
     if [[ $WITH_COVERAGE == yes ]]; then
-      tox -v -e $TRAVIS_PYTHON_VERSION -- nosetests --with-cov --cover-branch --cover-erase --cover-package=remote_pdb\*
+      tox -v -e $TRAVIS_PYTHON_VERSION -- coverage run tests/test_remote_pdb.py
     else
       tox -v -e $TRAVIS_PYTHON_VERSION
     fi
 after_success:
   - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage combine || true
-  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage report --show-missing --include='src/*' || true
+  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage report || true
   - .tox/$TRAVIS_PYTHON_VERSION/bin/coveralls
 notifications:
   email:

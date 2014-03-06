@@ -28,7 +28,7 @@
   <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;_svn;.git;.hg;.bzr;*%25*;tmp*.html;.DS_Store;*.swp;*.kpf;*.komodoproject;.komodotools;__pycache__;.tox;build;.ve;.coverage;dist</string>
   <string id="language">Python</string>
   <string id="lastInvocation">Project</string>
-  <string relative="path" id="pythonDefaultInterpreter">.tox/py/Scripts/python.exe</string>
-  <string relative="path" id="pythonExtraPaths">.tox/py/Lib/site-packages</string>
+  <string id="pythonDefaultInterpreter"></string>
+  <string relative="path" id="pythonExtraPaths">.tox/py/Lib/site-packages:/home/ionel/osp/python-remote-pdb/.tox/2.7/lib/python2.7/site-packages</string>
 </preference-set>
 </project>
