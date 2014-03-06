@@ -44,7 +44,7 @@ class RemotePdb(Pdb):
 
     To use this::
 
-        RemotePdb(4444).set_trace()
+        RemotePdb(host='0.0.0.0', port=4444).set_trace()
 
     Then run: telnet 127.0.0.1 4444
     """
