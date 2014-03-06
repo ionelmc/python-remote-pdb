@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 
 setup(
-    name="python-remote-pdb",
+    name="remote-pdb",
     version="0.2.0",
     url='https://github.com/ionelmc/python-remote-pdb',
     download_url='',
