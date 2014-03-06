@@ -37,6 +37,8 @@ script:
       tox -v -e $TRAVIS_PYTHON_VERSION
     fi
 after_success:
+  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage combine || true
+  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage report --show-missing --include='src/*' || true
   - .tox/$TRAVIS_PYTHON_VERSION/bin/coveralls
 notifications:
   email:
