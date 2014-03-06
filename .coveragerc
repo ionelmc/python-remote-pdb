@@ -1,0 +1,5 @@
+[run]
+source = src
+[report]
+show_missing = true
+omit = */python?.?/*,*/site-packages/*,*/pypy/*
