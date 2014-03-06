@@ -17,14 +17,8 @@ from remote_pdb import set_trace
 #import aspectlib
 #import aspectlib.debug
 #aspectlib.weave(
-#    (
-#        socket.socket,
-#        socket._fileobject
-#    ),
-#    aspectlib.debug.log(
-#        module=False,
-#        stacktrace=3,
-#    ),
+#    ('socket.socket', 'socket._fileobject'),
+#    aspectlib.debug.log(stacktrace=6), # show 6 frames
 #    on_init=True
 #)
 
