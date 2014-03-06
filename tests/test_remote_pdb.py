@@ -17,12 +17,14 @@ from remote_pdb import set_trace
 #import aspectlib
 #import aspectlib.debug
 #aspectlib.weave(
-#    (socket.socket, socket._fileobject),
+#    (
+#        socket.socket,
+#        socket._fileobject
+#    ),
 #    aspectlib.debug.log(
 #        module=False,
 #        stacktrace=3,
 #    ),
-#    #only_methods=['send', 'recv', 'sendall', 'accept', 'connect'],
 #    on_init=True
 #)
 
@@ -48,6 +50,7 @@ class RemotePDBTestCase(ProcessTestCase):
                     fh.readline()
                     self.assertEqual("-> print('{b2}')", fh.readline().strip())
                     fh.write('quit\r\n')
+                    fh.readline()
                     fh.close()
                 self.wait_for_strings(proc.read, TIMEOUT,
                     'Restoring streams',
@@ -76,7 +79,11 @@ class RemotePDBTestCase(ProcessTestCase):
                     fh.readline()
                     fh.readline()
                     self.assertEqual("-> print('{a2}')", fh.readline().strip())
-                    fh.write('continue\n')
+                    fh.write('continue\r\n')
+                    try:
+                        fh.readline()
+                    except Exception as exc:
+                        print("fh.readline() failed:", exc)
 
                 self.wait_for_strings(proc.read, TIMEOUT,
                     'DIED.',
