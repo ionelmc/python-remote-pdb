@@ -14,7 +14,6 @@ from process_tests import TestProcess
 from remote_pdb import PY3
 from remote_pdb import set_trace
 
-
 #import aspectlib
 #import aspectlib.debug
 #aspectlib.weave(
@@ -78,7 +77,6 @@ class RemotePDBTestCase(ProcessTestCase):
                     fh.readline()
                     self.assertEqual("-> print('{a2}')", fh.readline().strip())
                     fh.write('continue\n')
-                    self.assertEqual("(Pdb)", fh.readline().strip())
 
                 self.wait_for_strings(proc.read, TIMEOUT,
                     'DIED.',
