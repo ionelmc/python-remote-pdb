@@ -28,7 +28,7 @@ To open a remote PDB on first available port::
 To use some specific host/port::
 
     from remote_pdb import RemotePdb
-    RemotePdb(4444).set_trace()
+    RemotePdb('127.0.0.1', 4444).set_trace()
 
 To connect just run ``telnet 127.0.0.1 4444`` ...
 
