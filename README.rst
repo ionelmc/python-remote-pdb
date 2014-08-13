@@ -22,8 +22,8 @@ Usage
 
 To open a remote PDB on first available port::
 
-    from remote_pdb import set_strace
-    set_strace() # you'll see the port number in the logs
+    from remote_pdb import set_trace
+    set_trace() # you'll see the port number in the logs
 
 To use some specific host/port::
 
