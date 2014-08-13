@@ -30,7 +30,11 @@ To use some specific host/port::
     from remote_pdb import RemotePdb
     RemotePdb('127.0.0.1', 4444).set_trace()
 
-To connect just run ``telnet 127.0.0.1 4444`` ...
+To connect just run ``telnet 127.0.0.1 4444``.  When you are finished
+debugging, either exit the debugger, or press Control-], then Control-d.
+
+Alternately, one can connect with NetCat: ``nc -C 127.0.0.1 4444``.  When
+finished debugging, either exit the debugger, or press Control-c.
 
 Requirements
 ============
