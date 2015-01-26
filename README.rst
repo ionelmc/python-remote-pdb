@@ -20,12 +20,16 @@ Based on `pdbx <https://pypi.python.org/pypi/pdbx>`_.
 Usage
 =====
 
-To open a remote PDB on first available port::
+To open a remote PDB on first available port:
+
+.. code:: python
 
     from remote_pdb import set_trace
     set_trace() # you'll see the port number in the logs
 
-To use some specific host/port::
+To use some specific host/port:
+
+.. code:: python
 
     from remote_pdb import RemotePdb
     RemotePdb('127.0.0.1', 4444).set_trace()
