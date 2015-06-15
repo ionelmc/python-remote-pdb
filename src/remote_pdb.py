@@ -5,11 +5,13 @@ import logging
 import re
 import socket
 import sys
+
 from pdb import Pdb
 
 __version__ = "0.2.1"
 
 PY3 = sys.version_info[0] == 3
+
 
 def cry(message, stderr=sys.__stderr__):
     logging.critical(message)
@@ -18,7 +20,7 @@ def cry(message, stderr=sys.__stderr__):
 
 class LF2CRLF_FileWrapper(object):
     def __init__(self, fh):
-        self.fh = fh
+        self.stream = fh
         self.read = fh.read
         self.readline = fh.readline
         self.readlines = fh.readlines
@@ -26,14 +28,18 @@ class LF2CRLF_FileWrapper(object):
         self.flush = fh.flush
         self.fileno = fh.fileno
 
+    @property
+    def encoding(self):
+        return self.stream.encoding
+
     def __iter__(self):
-        return self.fh.__iter__()
+        return self.stream.__iter__()
 
     def write(self, data, nl_rex=re.compile("\r?\n")):
-        return self.fh.write(nl_rex.sub("\r\n", data))
+        return self.stream.write(nl_rex.sub("\r\n", data))
 
     def writelines(self, lines, nl_rex=re.compile("\r?\n")):
-        return self.fh.writelines(nl_rex.sub("\r\n", line) for line in lines)
+        return self.stream.writelines(nl_rex.sub("\r\n", line) for line in lines)
 
 
 class RemotePdb(Pdb):
@@ -50,6 +56,7 @@ class RemotePdb(Pdb):
 
     Then run: telnet 127.0.0.1 4444
     """
+
     def __init__(self, host, port, patch_stdstreams=False):
         listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
@@ -68,12 +75,12 @@ class RemotePdb(Pdb):
         self.backup = []
         if patch_stdstreams:
             for name in (
-                'stderr',
-                'stdout',
-                '__stderr__',
-                '__stdout__',
-                'stdin',
-                '__stdin__',
+                    'stderr',
+                    'stdout',
+                    '__stderr__',
+                    '__stdout__',
+                    'stdin',
+                    '__stdin__',
             ):
                 self.backup.append((name, getattr(sys, name)))
                 setattr(sys, name, self.handle)
@@ -84,16 +91,17 @@ class RemotePdb(Pdb):
             setattr(sys, name, fh)
         self.handle.close()
 
-    #def do_continue(self, arg):
+    # def do_continue(self, arg):
     #    self._close_session()
     #    self.set_continue()
     #    return 1
-    #do_c = do_cont = do_continue
+    # do_c = do_cont = do_continue
 
     def do_quit(self, arg):
         self.__restore()
         self.set_quit()
         return 1
+
     do_q = do_exit = do_quit
 
     def set_trace(self, frame=None):
@@ -107,6 +115,7 @@ class RemotePdb(Pdb):
 
     def set_quit(self):
         sys.settrace(None)
+
 
 def set_trace(host='127.0.0.1', port=0, patch_stdstreams=False):
     """
