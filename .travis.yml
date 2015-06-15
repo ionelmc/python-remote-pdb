@@ -1,46 +1,33 @@
 language: python
-os:
-  - linux
-  - osx
-python:
-  - "2.7"
-  - "2.6"
-  - "3.3"
-  - "pypy"
+python: 2.7
+sudo: false
 env:
   global:
-    PYTHONPATH=src:tests
-    PYTHONUNBUFFERED=yes
-    REMOTE_PDB_TEST_TIMEOUT=10
+    LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
   matrix:
-    - WITH_COVERAGE=no
-    - WITH_COVERAGE=yes
+    - TOXENV=check
+    - TOXENV=2.6,coveralls,codecov
+    - TOXENV=2.6-nocover
+    - TOXENV=2.7,coveralls,codecov
+    - TOXENV=2.7-nocover
+    - TOXENV=3.3,coveralls,codecov
+    - TOXENV=3.3-nocover
+    - TOXENV=3.4,coveralls,codecov
+    - TOXENV=3.4-nocover
+    - TOXENV=pypy,coveralls,codecov
+    - TOXENV=pypy-nocover
 before_install:
-  - |
-    if python --version |& grep PyPy; then
-      deactivate
-      sudo apt-add-repository --yes ppa:pypy/ppa
-      sudo apt-get update
-      sudo apt-get install pypy
-      source ~/virtualenv/pypy/bin/activate
-    fi
-    python --version
-    uname -a
-    lsb_release -a
+  - python --version
+  - virtualenv --version
+  - pip --version
+  - uname -a
+  - lsb_release -a
 install:
   - pip install tox
 script:
-  - |
-    if [[ $WITH_COVERAGE == yes ]]; then
-      tox -v -e $TRAVIS_PYTHON_VERSION -- coverage run tests/test_remote_pdb.py
-    else
-      tox -v -e $TRAVIS_PYTHON_VERSION
-    fi
-after_success:
-  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage combine || true
-  - .tox/$TRAVIS_PYTHON_VERSION/bin/coverage report || true
-  - .tox/$TRAVIS_PYTHON_VERSION/bin/coveralls
+  - tox -v
 notifications:
   email:
     on_success: never
     on_failure: always
+

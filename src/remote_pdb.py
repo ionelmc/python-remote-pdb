@@ -7,6 +7,8 @@ import socket
 import sys
 from pdb import Pdb
 
+__version__ = "0.2.1"
+
 PY3 = sys.version_info[0] == 3
 
 def cry(message, stderr=sys.__stderr__):
