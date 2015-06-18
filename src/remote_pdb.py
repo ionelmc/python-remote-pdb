@@ -86,7 +86,8 @@ class RemotePdb(Pdb):
                 setattr(sys, name, self.handle)
 
     def __restore(self):
-        cry('Restoring streams: %s ...' % self.backup)
+        if self.backup:
+            cry('Restoring streams: %s ...' % self.backup)
         for name, fh in self.backup:
             setattr(sys, name, fh)
         self.handle.close()
