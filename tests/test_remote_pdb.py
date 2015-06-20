@@ -5,13 +5,11 @@ import os
 import re
 import socket
 import sys
-from contextlib import closing
 
 from process_tests import wait_for_strings, dump_on_error, TestSocket
 from process_tests import TestProcess
 import time
 
-from remote_pdb import PY3
 from remote_pdb import set_trace
 
 TIMEOUT = int(os.getenv('REMOTE_PDB_TEST_TIMEOUT', 10))
