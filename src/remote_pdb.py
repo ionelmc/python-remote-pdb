@@ -92,12 +92,6 @@ class RemotePdb(Pdb):
             setattr(sys, name, fh)
         self.handle.close()
 
-    # def do_continue(self, arg):
-    #    self._close_session()
-    #    self.set_continue()
-    #    return 1
-    # do_c = do_cont = do_continue
-
     def do_quit(self, arg):
         self.__restore()
         self.set_quit()
