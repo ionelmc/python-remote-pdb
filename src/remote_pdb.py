@@ -8,7 +8,7 @@ import sys
 
 from pdb import Pdb
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 PY3 = sys.version_info[0] == 3
 
