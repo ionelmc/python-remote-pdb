@@ -36,11 +36,14 @@ class LF2CRLF_FileWrapper(object):
         return self.stream.__iter__()
 
     def write(self, data, nl_rex=re.compile("\r?\n")):
-        return self.stream.write(nl_rex.sub("\r\n", data))
+        self.stream.write(nl_rex.sub("\r\n", data))
+        # we have to explicitly flush, and unfortunately we cannot just disable buffering because on Python 3 text streams line buffering
+        # seems the minimum and on Windows line buffering doesn't work properly because we write unix-style line endings
+        self.stream.flush()
 
     def writelines(self, lines, nl_rex=re.compile("\r?\n")):
-        return self.stream.writelines(nl_rex.sub("\r\n", line) for line in lines)
-
+        self.stream.writelines(nl_rex.sub("\r\n", line) for line in lines)
+        self.stream.flush()
 
 class RemotePdb(Pdb):
     """
@@ -56,6 +59,7 @@ class RemotePdb(Pdb):
 
     Then run: telnet 127.0.0.1 4444
     """
+    active_instance = None
 
     def __init__(self, host, port, patch_stdstreams=False):
         listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -68,9 +72,9 @@ class RemotePdb(Pdb):
         connection, address = listen_socket.accept()
         cry("RemotePdb accepted connection from %s." % repr(address))
         if PY3:
-            self.handle = LF2CRLF_FileWrapper(connection.makefile('rw', buffering=1))
+            self.handle = LF2CRLF_FileWrapper(connection.makefile('rw'))
         else:
-            self.handle = LF2CRLF_FileWrapper(connection.makefile(bufsize=0))
+            self.handle = LF2CRLF_FileWrapper(connection.makefile())
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:
@@ -84,6 +88,7 @@ class RemotePdb(Pdb):
             ):
                 self.backup.append((name, getattr(sys, name)))
                 setattr(sys, name, self.handle)
+        RemotePdb.active_instance = self
 
     def __restore(self):
         if self.backup:
@@ -91,6 +96,7 @@ class RemotePdb(Pdb):
         for name, fh in self.backup:
             setattr(sys, name, fh)
         self.handle.close()
+        RemotePdb.active_instance = None
 
     def do_quit(self, arg):
         self.__restore()
