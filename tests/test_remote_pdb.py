@@ -9,6 +9,8 @@ from contextlib import closing
 
 from process_tests import wait_for_strings, dump_on_error, TestSocket
 from process_tests import TestProcess
+import time
+
 from remote_pdb import PY3
 from remote_pdb import set_trace
 
@@ -99,6 +101,7 @@ if __name__ == '__main__':
         func_a()
     elif test_name == 'test_redirect':
         func_a(patch_stdstreams=True)
+        time.sleep(TIMEOUT)
     else:
         raise RuntimeError('Invalid test spec %r.' % test_name)
     logging.info('DIED.')
