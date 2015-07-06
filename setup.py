@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='remote-pdb',
-    version='1.1.0',
+    version='1.1.1',
     license='BSD',
     description='Remote vanilla PDB (over TCP sockets).',
     long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
