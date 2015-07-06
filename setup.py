@@ -67,7 +67,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'remote_pdb = remote_pdb.__main__:main',
         ]
     },
 )
