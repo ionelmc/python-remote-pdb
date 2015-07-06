@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='remote-pdb',
-    version='1.1.1',
+    version='1.1.2',
     license='BSD',
     description='Remote vanilla PDB (over TCP sockets).',
     long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
@@ -58,7 +58,7 @@ setup(
         'debugging', 'debugger', 'pdb', 'remote', 'tcp', 'sockets', 'repl'
     ],
     install_requires=[
-        # eg: 'aspectlib==1.1.1', 'six>=1.7',
+        # eg: 'aspectlib==1.1.2', 'six>=1.7',
     ],
     extras_require={
         # eg:
