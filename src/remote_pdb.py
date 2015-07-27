@@ -108,7 +108,7 @@ class RemotePdb(Pdb):
 
     def set_trace(self, frame=None):
         if frame is None:
-            frame = sys._getframe(1).f_back
+            frame = sys._getframe().f_back
         try:
             Pdb.set_trace(self, frame)
         except IOError as exc:
@@ -124,4 +124,4 @@ def set_trace(host='127.0.0.1', port=0, patch_stdstreams=False):
     Opens a remote PDB on first available port.
     """
     rdb = RemotePdb(host=host, port=port, patch_stdstreams=patch_stdstreams)
-    rdb.set_trace()
+    rdb.set_trace(frame=sys._getframe().f_back)
