@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.1.3 (2015-07-06)
+------------------
+
+* Corrected the default frame tracing starts from.
+
 1.1.2 (2015-07-06)
 ------------------
 
