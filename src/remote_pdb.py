@@ -38,8 +38,9 @@ class LF2CRLF_FileWrapper(object):
 
     def write(self, data, nl_rex=re.compile("\r?\n")):
         self.stream.write(nl_rex.sub("\r\n", data))
-        # we have to explicitly flush, and unfortunately we cannot just disable buffering because on Python 3 text streams line buffering
-        # seems the minimum and on Windows line buffering doesn't work properly because we write unix-style line endings
+        # we have to explicitly flush, and unfortunately we cannot just disable buffering because on Python 3 text
+        # streams line buffering seems the minimum and on Windows line buffering doesn't work properly because we
+        # write unix-style line endings
         self.stream.flush()
 
     def writelines(self, lines, nl_rex=re.compile("\r?\n")):
