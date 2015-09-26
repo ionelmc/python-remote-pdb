@@ -5,10 +5,12 @@ import os
 import re
 import socket
 import sys
-
-from process_tests import wait_for_strings, dump_on_error, TestSocket
-from process_tests import TestProcess
 import time
+
+from process_tests import TestProcess
+from process_tests import TestSocket
+from process_tests import dump_on_error
+from process_tests import wait_for_strings
 
 from remote_pdb import set_trace
 
