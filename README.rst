@@ -93,6 +93,19 @@ Alternately, one can connect with NetCat: ``nc -C 127.0.0.1 4444`` or Socat: ``s
 tcp:127.0.0.1:4444`` (for line editing and history support).  When finished debugging, either exit 
 the debugger, or press Control-c.
 
+Note about OS X
+===============
+
+In certain scenarios (backgrounded processes) OS X will prevent readline to be imported (and readline is a dependency of pdb). 
+A workaround (run this early):
+
+... sourcecode:: python
+
+    import signal
+    signal.signal(signal.SIGTTOU, signal.SIG_IGN)
+
+See `#9 <https://github.com/ionelmc/python-remote-pdb/issues/9>`_ and `cpython#14892 <http://bugs.python.org/issue14892>`_.
+
 Requirements
 ============
 
