@@ -99,7 +99,7 @@ Note about OS X
 In certain scenarios (backgrounded processes) OS X will prevent readline to be imported (and readline is a dependency of pdb). 
 A workaround (run this early):
 
-... code:: python
+.. code:: python
 
     import signal
     signal.signal(signal.SIGTTOU, signal.SIG_IGN)
