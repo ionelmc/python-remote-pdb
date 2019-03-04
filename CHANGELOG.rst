@@ -5,8 +5,9 @@ Changelog
 1.3.0 (Unreleased)
 ------------------
 
-* Document support for Python3.8's ``breakpoint()``.
+* Document support for Python 3.8's ``breakpoint()``.
 * Add specifying default listen behavior through environment variables.
+* Avoid discarding input (workaround for bug in Python 3.6 and later).
 
 1.2.0 (2015-09-26)
 ------------------
