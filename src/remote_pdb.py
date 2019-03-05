@@ -2,13 +2,14 @@ from __future__ import print_function
 
 import errno
 import logging
+import os
 import re
 import socket
 import sys
 
 from pdb import Pdb
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 PY3 = sys.version_info[0] == 3
 
@@ -119,9 +120,13 @@ class RemotePdb(Pdb):
         sys.settrace(None)
 
 
-def set_trace(host='127.0.0.1', port=0, patch_stdstreams=False):
+def set_trace(host=None, port=None, patch_stdstreams=False):
     """
     Opens a remote PDB on first available port.
     """
+    if host is None:
+        host = os.environ.get('REMOTE_PDB_HOST', '127.0.0.1')
+    if port is None:
+        port = int(os.environ.get('REMOTE_PDB_PORT', '0'))
     rdb = RemotePdb(host=host, port=port, patch_stdstreams=patch_stdstreams)
     rdb.set_trace(frame=sys._getframe().f_back)

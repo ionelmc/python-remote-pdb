@@ -2,6 +2,12 @@
 Changelog
 =========
 
+1.3.0 (Unreleased)
+------------------
+
+* Document support for Python3.8's ``breakpoint()``.
+* Add specifying default listen behavior through environment variables.
+
 1.2.0 (2015-09-26)
 ------------------
 
