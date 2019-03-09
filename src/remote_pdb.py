@@ -21,15 +21,15 @@ def cry(message, stderr=sys.__stderr__):
 
 
 class LF2CRLF_FileWrapper(object):
-    def __init__(self, fh, write_override=None):
-        self.stream = fh
+    def __init__(self, connection):
+        self.connection = connection
+        self.stream = fh = connection.makefile('rw')
         self.read = fh.read
         self.readline = fh.readline
         self.readlines = fh.readlines
         self.close = fh.close
         self.flush = fh.flush
         self.fileno = fh.fileno
-        self.write_override = write_override
 
     @property
     def encoding(self):
@@ -40,18 +40,12 @@ class LF2CRLF_FileWrapper(object):
 
     def write(self, data, nl_rex=re.compile("\r?\n")):
         data = nl_rex.sub("\r\n", data)
-        if self.write_override:
-            self.write_override(data)
-        else:
-            self.stream.write(data)
-            # we have to explicitly flush, and unfortunately we cannot just disable buffering because on Python 3 text
-            # streams line buffering seems the minimum and on Windows line buffering doesn't work properly because we
-            # write unix-style line endings
-            self.stream.flush()
+        self.connection.sendall(data.encode(self.stream.encoding))
 
     def writelines(self, lines, nl_rex=re.compile("\r?\n")):
         for line in lines:
             self.write(line, nl_rex)
+
 
 class RemotePdb(Pdb):
     """
@@ -77,17 +71,7 @@ class RemotePdb(Pdb):
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         cry("RemotePdb accepted connection from %s." % repr(address))
-        if PY3:
-            # Some versions of Python 3.6, 3.7 and 3.8 have errors with makefile in rw mode
-            # This redirects the write calls to the underlying socket as a workaround
-            # See https://bugs.python.org/issue35928 for tracking of the fix
-            filelike = connection.makefile('r')
-            def write_override(data):
-                data = data.encode(filelike.encoding)
-                connection.send(data)
-            self.handle = LF2CRLF_FileWrapper(filelike, write_override=write_override)
-        else:
-            self.handle = LF2CRLF_FileWrapper(connection.makefile())
+        self.handle = LF2CRLF_FileWrapper(connection)
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:

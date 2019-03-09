@@ -75,6 +75,28 @@ def test_simple_break():
             assert 'Restoring streams' not in proc.read()
 
 
+def test_trash_input():
+    with TestProcess(sys.executable, __file__, 'daemon', 'test_simple') as proc:
+        with dump_on_error(proc.read):
+            wait_for_strings(proc.read, TIMEOUT,
+                             '{a1}',
+                             '{b1}',
+                             'RemotePdb session open at ')
+            host, port = re.findall("RemotePdb session open at (.+):(.+),", proc.read())[0]
+            with TestSocket(socket.create_connection((host, int(port)), timeout=TIMEOUT)) as client:
+                with dump_on_error(client.read):
+                    wait_for_strings(proc.read, TIMEOUT, 'accepted connection from')
+                    wait_for_strings(client.read, TIMEOUT, "-> print('{b2}')")
+                    for i in range(100):
+                        client.fh.write(b'\r\n'.join(b'print("[%d]")' % (i * 10 + j) for j in range(10)) + b'\r\n')
+                    client.fh.write(b'quit\r\n')
+                    wait_for_strings(client.read, TIMEOUT, *[
+                        '[%s]' % i for i in range(1000)
+                    ])
+
+            wait_for_strings(proc.read, TIMEOUT, 'DIED.')
+
+
 def func_b(patch_stdstreams):
     print('{b1}')
     set_trace(patch_stdstreams=patch_stdstreams)
