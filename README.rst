@@ -48,15 +48,15 @@
     :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/remote-pdb
 
-.. |wheel| image:: https://pypip.in/wheel/remote-pdb/badge.svg?style=flat
+.. |wheel| image:: https://img.shields.io/pypi/wheel/remote-pdb.svg?style=flat
     :alt: PyPI Wheel
     :target: https://pypi.python.org/pypi/remote-pdb
 
-.. |supported-versions| image:: https://pypip.in/py_versions/remote-pdb/badge.svg?style=flat
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/remote-pdb.svg?style=flat
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/remote-pdb
 
-.. |supported-implementations| image:: https://pypip.in/implementation/remote-pdb/badge.svg?style=flat
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/remote-pdb.svg?style=flat
     :alt: Supported imlementations
     :target: https://pypi.python.org/pypi/remote-pdb
 
