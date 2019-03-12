@@ -1,7 +1,6 @@
-Welcome to remote-pdb's documentation!
-======================================
-
-Contents:
+========
+Contents
+========
 
 .. toctree::
    :maxdepth: 2

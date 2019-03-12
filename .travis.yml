@@ -1,43 +1,75 @@
 language: python
-python: 2.7
-sudo: false
+dist: xenial
 env:
   global:
-    LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
-  matrix:
-    - TOXENV=check
-    - TOXENV=2.6,coveralls,codecov
-    - TOXENV=2.6-pdbpp,coveralls,codecov
-    - TOXENV=2.6-nocover
-    - TOXENV=2.6-nocover-pdbpp
-    - TOXENV=2.7,coveralls,codecov
-    - TOXENV=2.7-pdbpp,coveralls,codecov
-    - TOXENV=2.7-nocover
-    - TOXENV=2.7-nocover-pdbpp
-    - TOXENV=3.3,coveralls,codecov
-    - TOXENV=3.3-pdbpp,coveralls,codecov
-    - TOXENV=3.3-nocover
-    - TOXENV=3.3-nocover-pdbpp
-    - TOXENV=3.4,coveralls,codecov
-    - TOXENV=3.4-pdbpp,coveralls,codecov
-    - TOXENV=3.4-nocover
-    - TOXENV=3.4-nocover-pdbpp
-    - TOXENV=pypy,coveralls,codecov
-    - TOXENV=pypy-pdbpp,coveralls,codecov
-    - TOXENV=pypy-nocover
-    - TOXENV=pypy-nocover-pdbpp
+    - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+    - SEGFAULT_SIGNALS=all
+matrix:
+  include:
+    - python: '3.6'
+      env:
+        - TOXENV=check
+    - python: '3.6'
+      env:
+        - TOXENV=docs
+    - python: '2.7'
+      env:
+        - TOXENV=py27-cover,report,coveralls,codecov
+    - python: '2.7'
+      env:
+        - TOXENV=py27-nocov
+    - python: '3.4'
+      env:
+        - TOXENV=py34-cover,report,coveralls,codecov
+    - python: '3.4'
+      env:
+        - TOXENV=py34-nocov
+    - python: '3.5'
+      env:
+        - TOXENV=py35-cover,report,coveralls,codecov
+    - python: '3.5'
+      env:
+        - TOXENV=py35-nocov
+    - python: '3.6'
+      env:
+        - TOXENV=py36-cover,report,coveralls,codecov
+    - python: '3.6'
+      env:
+        - TOXENV=py36-nocov
+    - python: '3.7'
+      env:
+        - TOXENV=py37-cover,report,coveralls,codecov
+    - python: '3.7'
+      env:
+        - TOXENV=py37-nocov
+    - python: 'pypy2.7-6.0'
+      env:
+        - TOXENV=pypy-cover,report,coveralls,codecov
+    - python: 'pypy2.7-6.0'
+      env:
+        - TOXENV=pypy-nocov
+    - python: 'pypy3.5-6.0'
+      env:
+        - TOXENV=pypy3-cover,report,coveralls,codecov
+    - python: 'pypy3.5-6.0'
+      env:
+        - TOXENV=pypy3-nocov
 before_install:
   - python --version
-  - virtualenv --version
-  - pip --version
   - uname -a
   - lsb_release -a
 install:
   - pip install tox
+  - virtualenv --version
+  - easy_install --version
+  - pip --version
+  - tox --version
 script:
   - tox -v
+after_failure:
+  - more .tox/log/* | cat
+  - more .tox/*/log/* | cat
 notifications:
   email:
     on_success: never
     on_failure: always
-
