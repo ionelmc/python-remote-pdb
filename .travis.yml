@@ -14,46 +14,88 @@ matrix:
         - TOXENV=docs
     - python: '2.7'
       env:
-        - TOXENV=py27-cover,report,coveralls,codecov
+        - TOXENV=py27-plain-cover,report,coveralls,codecov
     - python: '2.7'
       env:
-        - TOXENV=py27-nocov
+        - TOXENV=py27-plain-nocov
+    - python: '2.7'
+      env:
+        - TOXENV=py27-pdbpp-cover,report,coveralls,codecov
+    - python: '2.7'
+      env:
+        - TOXENV=py27-pdbpp-nocov
     - python: '3.4'
       env:
-        - TOXENV=py34-cover,report,coveralls,codecov
+        - TOXENV=py34-plain-cover,report,coveralls,codecov
     - python: '3.4'
       env:
-        - TOXENV=py34-nocov
+        - TOXENV=py34-plain-nocov
+    - python: '3.4'
+      env:
+        - TOXENV=py34-pdbpp-cover,report,coveralls,codecov
+    - python: '3.4'
+      env:
+        - TOXENV=py34-pdbpp-nocov
     - python: '3.5'
       env:
-        - TOXENV=py35-cover,report,coveralls,codecov
+        - TOXENV=py35-plain-cover,report,coveralls,codecov
     - python: '3.5'
       env:
-        - TOXENV=py35-nocov
+        - TOXENV=py35-plain-nocov
+    - python: '3.5'
+      env:
+        - TOXENV=py35-pdbpp-cover,report,coveralls,codecov
+    - python: '3.5'
+      env:
+        - TOXENV=py35-pdbpp-nocov
     - python: '3.6'
       env:
-        - TOXENV=py36-cover,report,coveralls,codecov
+        - TOXENV=py36-plain-cover,report,coveralls,codecov
     - python: '3.6'
       env:
-        - TOXENV=py36-nocov
+        - TOXENV=py36-plain-nocov
+    - python: '3.6'
+      env:
+        - TOXENV=py36-pdbpp-cover,report,coveralls,codecov
+    - python: '3.6'
+      env:
+        - TOXENV=py36-pdbpp-nocov
     - python: '3.7'
       env:
-        - TOXENV=py37-cover,report,coveralls,codecov
+        - TOXENV=py37-plain-cover,report,coveralls,codecov
     - python: '3.7'
       env:
-        - TOXENV=py37-nocov
+        - TOXENV=py37-plain-nocov
+    - python: '3.7'
+      env:
+        - TOXENV=py37-pdbpp-cover,report,coveralls,codecov
+    - python: '3.7'
+      env:
+        - TOXENV=py37-pdbpp-nocov
     - python: 'pypy2.7-6.0'
       env:
-        - TOXENV=pypy-cover,report,coveralls,codecov
+        - TOXENV=pypy-plain-cover,report,coveralls,codecov
     - python: 'pypy2.7-6.0'
       env:
-        - TOXENV=pypy-nocov
+        - TOXENV=pypy-plain-nocov
+    - python: 'pypy2.7-6.0'
+      env:
+        - TOXENV=pypy-pdbpp-cover,report,coveralls,codecov
+    - python: 'pypy2.7-6.0'
+      env:
+        - TOXENV=pypy-pdbpp-nocov
     - python: 'pypy3.5-6.0'
       env:
-        - TOXENV=pypy3-cover,report,coveralls,codecov
+        - TOXENV=pypy3-plain-cover,report,coveralls,codecov
     - python: 'pypy3.5-6.0'
       env:
-        - TOXENV=pypy3-nocov
+        - TOXENV=pypy3-plain-nocov
+    - python: 'pypy3.5-6.0'
+      env:
+        - TOXENV=pypy3-pdbpp-cover,report,coveralls,codecov
+    - python: 'pypy3.5-6.0'
+      env:
+        - TOXENV=pypy3-pdbpp-nocov
 before_install:
   - python --version
   - uname -a
