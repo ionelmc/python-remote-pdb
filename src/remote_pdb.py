@@ -30,6 +30,10 @@ class LF2CRLF_FileWrapper(object):
         self.close = fh.close
         self.flush = fh.flush
         self.fileno = fh.fileno
+        if hasattr(fh, 'encoding'):
+            self._send = lambda data: connection.sendall(data.encode(fh.encoding))
+        else:
+            self._send = connection.sendall
 
     @property
     def encoding(self):
@@ -40,7 +44,7 @@ class LF2CRLF_FileWrapper(object):
 
     def write(self, data, nl_rex=re.compile("\r?\n")):
         data = nl_rex.sub("\r\n", data)
-        self.connection.sendall(data.encode(self.stream.encoding))
+        self._send(data)
 
     def writelines(self, lines, nl_rex=re.compile("\r?\n")):
         for line in lines:
