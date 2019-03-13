@@ -2,4 +2,5 @@
 Authors
 =======
 
-* Ionel Cristian Mărieș - http://blog.ionelmc.ro
+* Ionel Cristian Mărieș - https://blog.ionelmc.ro
+* Matthew Wilkes - https://github.com/MatthewWilkes

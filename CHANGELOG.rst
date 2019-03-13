@@ -2,12 +2,15 @@
 Changelog
 =========
 
-1.3.0 (Unreleased)
+1.3.0 (2019-03-13)
 ------------------
 
-* Document support for Python 3.8's ``breakpoint()``.
-* Add specifying default listen behavior through environment variables.
-* Avoid discarding input (workaround for bug in Python 3.6 and later).
+* Documented support for Python 3.8's ``breakpoint()``.
+* Added support for setting the socket listening host/port through the ``REMOTE_PDB_HOST``/``REMOTE_PDB_PORT``
+  environment variables. Contributed by Matthew Wilkes in `#14 <https://github.com/ionelmc/python-remote-pdb/pull/14>`_.
+* Removed use of `rw` file wrappers around sockets (turns out socket's ``makefile`` is very buggy in Python 3.6 and
+  later - `output is discarded <https://bugs.python.org/issue35928>`_). Contributed in `#13
+  <https://github.com/ionelmc/python-remote-pdb/pull/13>`_.
 
 1.2.0 (2015-09-26)
 ------------------
