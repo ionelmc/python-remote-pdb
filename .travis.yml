@@ -24,18 +24,6 @@ matrix:
     - python: '2.7'
       env:
         - TOXENV=py27-pdbpp-nocov
-    - python: '3.4'
-      env:
-        - TOXENV=py34-plain-cover,report,coveralls,codecov
-    - python: '3.4'
-      env:
-        - TOXENV=py34-plain-nocov
-    - python: '3.4'
-      env:
-        - TOXENV=py34-pdbpp-cover,report,coveralls,codecov
-    - python: '3.4'
-      env:
-        - TOXENV=py34-pdbpp-nocov
     - python: '3.5'
       env:
         - TOXENV=py35-plain-cover,report,coveralls,codecov
