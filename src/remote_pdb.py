@@ -6,7 +6,6 @@ import os
 import re
 import socket
 import sys
-
 from pdb import Pdb
 
 __version__ = '1.2.0'

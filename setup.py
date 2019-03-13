@@ -27,7 +27,8 @@ setup(
     name='remote-pdb',
     version='1.2.0',
     license='BSD 2-Clause License',
-    description='Remote vanilla PDB (over TCP sockets) *done right*: no extras, proper handling around connection failures and CI. Based on `pdbx <https://pypi.python.org/pypi/pdbx>`_.',
+    description='Remote vanilla PDB (over TCP sockets) *done right*: no extras, proper handling around connection '
+                'failures and CI. Based on `pdbx <https://pypi.python.org/pypi/pdbx>`_.',
     long_description='%s\n%s' % (
         re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
         re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
