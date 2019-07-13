@@ -7,6 +7,8 @@ Changelog
 
 * raise `BdbQuit` on quitting.  Contributed in `#18 
   <https://github.com/ionelmc/python-remote-pdb/pull/18>`_.
+* Add ``REMOTE_PDB_QUIET=1`` to silence output in `#19
+  <https://github.com/ionelmc/python-remote-pdb/pull/19>`_.
 
 1.3.0 (2019-03-13)
 ------------------

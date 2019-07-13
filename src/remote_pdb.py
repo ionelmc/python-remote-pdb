@@ -66,14 +66,17 @@ class RemotePdb(Pdb):
     """
     active_instance = None
 
-    def __init__(self, host, port, patch_stdstreams=False):
+    def __init__(self, host, port, patch_stdstreams=False, quiet=False):
+        self._quiet = quiet
         listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
         listen_socket.bind((host, port))
-        cry("RemotePdb session open at %s:%s, waiting for connection ..." % listen_socket.getsockname())
+        if not self._quiet:
+            cry("RemotePdb session open at %s:%s, waiting for connection ..." % listen_socket.getsockname())
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
-        cry("RemotePdb accepted connection from %s." % repr(address))
+        if not self._quiet:
+            cry("RemotePdb accepted connection from %s." % repr(address))
         self.handle = LF2CRLF_FileWrapper(connection)
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
@@ -91,7 +94,7 @@ class RemotePdb(Pdb):
         RemotePdb.active_instance = self
 
     def __restore(self):
-        if self.backup:
+        if self.backup and not self._quiet:
             cry('Restoring streams: %s ...' % self.backup)
         for name, fh in self.backup:
             setattr(sys, name, fh)
@@ -114,7 +117,7 @@ class RemotePdb(Pdb):
                 raise
 
 
-def set_trace(host=None, port=None, patch_stdstreams=False):
+def set_trace(host=None, port=None, patch_stdstreams=False, quiet=None):
     """
     Opens a remote PDB on first available port.
     """
@@ -122,5 +125,7 @@ def set_trace(host=None, port=None, patch_stdstreams=False):
         host = os.environ.get('REMOTE_PDB_HOST', '127.0.0.1')
     if port is None:
         port = int(os.environ.get('REMOTE_PDB_PORT', '0'))
-    rdb = RemotePdb(host=host, port=port, patch_stdstreams=patch_stdstreams)
+    if quiet is None:
+        quiet = bool(os.environ.get('REMOTE_PDB_QUIET', ''))
+    rdb = RemotePdb(host=host, port=port, patch_stdstreams=patch_stdstreams, quiet=quiet)
     rdb.set_trace(frame=sys._getframe().f_back)
