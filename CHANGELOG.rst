@@ -2,10 +2,16 @@
 Changelog
 =========
 
+1.4.0 (unreleased)
+------------------
+
+* raise `BdbQuit` on quitting.  Contributed in `#18 
+  <https://github.com/ionelmc/python-remote-pdb/pull/18>`_.
+
 1.3.0 (2019-03-13)
 ------------------
 
-* Documented support for Python 3.8's ``breakpoint()``.
+* Documented support for Python 3.7's ``breakpoint()``.
 * Added support for setting the socket listening host/port through the ``REMOTE_PDB_HOST``/``REMOTE_PDB_PORT``
   environment variables. Contributed by Matthew Wilkes in `#14 <https://github.com/ionelmc/python-remote-pdb/pull/14>`_.
 * Removed use of `rw` file wrappers around sockets (turns out socket's ``makefile`` is very buggy in Python 3.6 and
