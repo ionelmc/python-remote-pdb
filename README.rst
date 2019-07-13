@@ -126,6 +126,10 @@ If ``REMOTE_PDB_HOST`` is omitted then a default value of 127.0.0.1 will be used
 omitted then the first available port will be used. The connection information will be logged to the console,
 as with calls to ``remote_pdb.set_trace()``.
 
+To quiet the output, set ``REMOTE_PDB_QUIET=1``, this will prevent
+``RemotePdb`` from producing any output -- you'll probably want to specify
+``REMOTE_PDB_PORT`` as well since the randomized port won't be printed.
+
 
 Note about OS X
 ===============
