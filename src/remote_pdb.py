@@ -100,8 +100,7 @@ class RemotePdb(Pdb):
 
     def do_quit(self, arg):
         self.__restore()
-        self.set_quit()
-        return 1
+        return Pdb.do_quit(self, arg)
 
     do_q = do_exit = do_quit
 
@@ -113,9 +112,6 @@ class RemotePdb(Pdb):
         except IOError as exc:
             if exc.errno != errno.ECONNRESET:
                 raise
-
-    def set_quit(self):
-        sys.settrace(None)
 
 
 def set_trace(host=None, port=None, patch_stdstreams=False):
