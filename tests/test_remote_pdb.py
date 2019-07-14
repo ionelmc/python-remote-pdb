@@ -7,6 +7,8 @@ import socket
 import sys
 import time
 
+import psutil
+import pytest
 from process_tests import TestProcess
 from process_tests import TestSocket
 from process_tests import dump_on_error
@@ -31,6 +33,29 @@ def test_simple():
                     wait_for_strings(client.read, TIMEOUT, "-> print('{b2}')")
                     client.fh.write(b'continue\r\n')
             wait_for_strings(proc.read, TIMEOUT, 'DIED.')
+
+
+@pytest.mark.parametrize('kind', ['environ', 'argument'])
+def test_quiet(kind):
+    with TestProcess(sys.executable, __file__, 'daemon', 'test_quiet', kind) as proc:
+        with dump_on_error(proc.read):
+            wait_for_strings(proc.read, TIMEOUT,
+                             '{a1}',
+                             '{b1}')
+            psproc = psutil.Process(proc.proc.pid)
+            port = None
+            t = time.time()
+            while port is None and time.time() - t < 5:
+                for c in psproc.connections():
+                    if c.status == psutil.CONN_LISTEN and c.laddr[0] == '127.0.0.1':
+                        port = c.laddr[1]
+
+            with TestSocket(socket.create_connection(('127.0.0.1', int(port)), timeout=TIMEOUT)) as client:
+                with dump_on_error(client.read):
+                    wait_for_strings(client.read, TIMEOUT, "-> print('{b2}')")
+                    client.fh.write(b'continue\r\n')
+            wait_for_strings(proc.read, TIMEOUT, 'DIED.')
+            assert 'RemotePdb session open at' not in proc.read()
 
 
 def test_quit():
@@ -113,15 +138,15 @@ def test_trash_input():
             wait_for_strings(proc.read, TIMEOUT, 'DIED.')
 
 
-def func_b(patch_stdstreams):
+def func_b(**kwargs):
     print('{b1}')
-    set_trace(patch_stdstreams=patch_stdstreams)
+    set_trace(**kwargs)
     print('{b2}')
 
 
-def func_a(block=lambda _: None, patch_stdstreams=False):
+def func_a(block=lambda _: None, **kwargs):
     print('{a1}')
-    func_b(patch_stdstreams)
+    func_b(**kwargs)
     print('{a2}')
     x = block('{a3} ?')
     print('{=> %s}' % x)
@@ -137,6 +162,14 @@ if __name__ == '__main__':
 
     if test_name == 'test_simple':
         func_a()
+    elif test_name == 'test_quiet':
+        if sys.argv[3] == 'environ':
+            os.environ['REMOTE_PDB_QUIET'] = 'x'
+            func_a()
+        elif sys.argv[3] == 'argument':
+            func_a(quiet=True)
+        else:
+            raise RuntimeError('Invalid test spec %r.' % sys.argv)
     elif test_name == 'test_redirect':
         func_a(patch_stdstreams=True)
         time.sleep(TIMEOUT)
