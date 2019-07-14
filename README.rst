@@ -11,7 +11,7 @@ Overview
       - |docs|
     * - tests
       - | |travis| |appveyor| |requires|
-        | |coveralls| |codecov|
+        | |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
@@ -30,10 +30,6 @@ Overview
 .. |requires| image:: https://requires.io/github/ionelmc/python-remote-pdb/requirements.svg?branch=master
     :alt: Requirements Status
     :target: https://requires.io/github/ionelmc/python-remote-pdb/requirements/?branch=master
-
-.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-remote-pdb/badge.svg?branch=master&service=github
-    :alt: Coverage Status
-    :target: https://coveralls.io/r/ionelmc/python-remote-pdb
 
 .. |codecov| image:: https://codecov.io/github/ionelmc/python-remote-pdb/coverage.svg?branch=master
     :alt: Coverage Status
