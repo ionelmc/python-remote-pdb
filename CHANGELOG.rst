@@ -2,13 +2,14 @@
 Changelog
 =========
 
-1.4.0 (unreleased)
+2.0.0 (2019-07-21)
 ------------------
 
-* raise `BdbQuit` on quitting.  Contributed in `#18 
-  <https://github.com/ionelmc/python-remote-pdb/pull/18>`_.
-* Add ``REMOTE_PDB_QUIET=1`` to silence output in `#19
-  <https://github.com/ionelmc/python-remote-pdb/pull/19>`_.
+* Fixed inconsistency with normal use of ``pdb`` - `BdbQuit` will now be raised on quitting.
+  Contributed by Anthony Sottile in `#18 <https://github.com/ionelmc/python-remote-pdb/pull/18>`_.
+  **BACKWARDS INCOMPATIBLE**.
+* Added ``REMOTE_PDB_QUIET=1`` to silence output.
+  Contributed by Anthony Sottile in `#19 <https://github.com/ionelmc/python-remote-pdb/pull/19>`_.
 
 1.3.0 (2019-03-13)
 ------------------
