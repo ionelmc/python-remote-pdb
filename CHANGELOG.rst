@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0 (2019-07-21)
+2.0.0 (2019-07-31)
 ------------------
 
 * Fixed inconsistency with normal use of ``pdb`` - `BdbQuit` will now be raised on quitting.
