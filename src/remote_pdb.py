@@ -66,28 +66,41 @@ class RemotePdb(Pdb):
     """
     active_instance = None
 
-    def __init__(self, host, port, patch_stdstreams=False, quiet=False):
+    def __init__(self, host='127.0.0.1', port=4444, patch_stdstreams=False, quiet=False, unix_socket_file=None):
         self._quiet = quiet
-        listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
-        listen_socket.bind((host, port))
+        if unix_socket_file:
+            socket_type = socket.AF_UNIX
+        else:
+            socket_type = socket.AF_INET
+        listen_socket = socket.socket(socket_type, socket.SOCK_STREAM)
+        if not unix_socket_file:
+            listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+            listen_socket.bind((host, port))
+        else:
+            listen_socket.bind(unix_socket_file)
         if not self._quiet:
-            cry("RemotePdb session open at %s:%s, waiting for connection ..." % listen_socket.getsockname())
+            if unix_socket_file:
+                cry("RemotePdb session open at %s, waiting for connection ..." % unix_socket_file)
+            else:
+                cry("RemotePdb session open at %s:%s, waiting for connection ..." % listen_socket.getsockname())
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         if not self._quiet:
-            cry("RemotePdb accepted connection from %s." % repr(address))
+            if unix_socket_file:
+                cry("RemotePdb accepted connection from %s." % unix_socket_file)
+            else:
+                cry("RemotePdb accepted connection from %s." % repr(address))
         self.handle = LF2CRLF_FileWrapper(connection)
         Pdb.__init__(self, completekey='tab', stdin=self.handle, stdout=self.handle)
         self.backup = []
         if patch_stdstreams:
             for name in (
-                    'stderr',
-                    'stdout',
-                    '__stderr__',
-                    '__stdout__',
-                    'stdin',
-                    '__stdin__',
+                'stderr',
+                'stdout',
+                '__stderr__',
+                '__stdout__',
+                'stdin',
+                '__stdin__',
             ):
                 self.backup.append((name, getattr(sys, name)))
                 setattr(sys, name, self.handle)
