@@ -94,6 +94,11 @@ Alternately, one can connect with NetCat: ``nc -C 127.0.0.1 4444`` or Socat: ``s
 tcp:127.0.0.1:4444`` (for line editing and history support).  When finished debugging, either exit
 the debugger, or press Control-c.
 
+Note that newer Ubuntu disabled readline support in socat, so if you get 
+``unknown device/address "readline"`` try using rlwrap like this::
+
+    rlwrap socat - tcp:127.0.0.1:4444
+
 Integration with breakpoint() in Python 3.7+
 ============================================
 
