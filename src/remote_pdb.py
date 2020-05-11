@@ -11,10 +11,11 @@ from pdb import Pdb
 __version__ = '2.0.0'
 
 PY3 = sys.version_info[0] == 3
+log = logging.getLogger(__name__)
 
 
 def cry(message, stderr=sys.__stderr__):
-    logging.critical(message)
+    log.critical(message)
     print(message, file=stderr)
     stderr.flush()
 
