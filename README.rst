@@ -99,6 +99,15 @@ Note that newer Ubuntu disabled readline support in socat, so if you get
 
     rlwrap socat - tcp:127.0.0.1:4444
 
+Using in containers
+===================
+
+If you want to connect from the host to remote-pdb running inside the container you should make sure that:
+
+* The port you will use is mapped (eg: ``-p 4444:4444``).
+* The host is set to ``0.0.0.0`` (``localhost` or ``127.0.0.1`` will not work because
+  Docker doesn't map the port on the local interface).
+
 Integration with breakpoint() in Python 3.7+
 ============================================
 
