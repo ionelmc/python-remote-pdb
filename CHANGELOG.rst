@@ -2,6 +2,12 @@
 Changelog
 =========
 
+2.1.0 (2020-07-24)
+------------------
+
+* Changed logging to use ``remote_pdb`` logger instead of the root one.
+  Contributed by Terence Honles in `#24 <https://github.com/ionelmc/python-remote-pdb/pull/24>`_.
+
 2.0.0 (2019-07-31)
 ------------------
 
