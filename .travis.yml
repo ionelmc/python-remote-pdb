@@ -63,6 +63,18 @@ matrix:
         - TOXENV=py37-pdbpp-nocov
       python: '3.7'
     - env:
+        - TOXENV=py38-plain-cover,codecov,coveralls
+      python: '3.8'
+    - env:
+        - TOXENV=py38-plain-nocov
+      python: '3.8'
+    - env:
+        - TOXENV=py38-pdbpp-cover,codecov,coveralls
+      python: '3.8'
+    - env:
+        - TOXENV=py38-pdbpp-nocov
+      python: '3.8'
+    - env:
         - TOXENV=pypy-plain-cover,codecov,coveralls
       python: 'pypy'
     - env:
