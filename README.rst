@@ -55,9 +55,9 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/remote-pdb
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-remote-pdb/v2.0.0.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-remote-pdb/v2.1.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.0.0...master
+    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.1.0...master
 
 
 

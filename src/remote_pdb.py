@@ -8,7 +8,7 @@ import socket
 import sys
 from pdb import Pdb
 
-__version__ = '2.0.0'
+__version__ = '2.1.0'
 
 PY3 = sys.version_info[0] == 3
 log = logging.getLogger(__name__)

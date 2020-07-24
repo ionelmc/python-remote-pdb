@@ -25,7 +25,7 @@ def read(*names, **kwargs):
 
 setup(
     name='remote-pdb',
-    version='2.0.0',
+    version='2.1.0',
     license='BSD-2-Clause',
     description='Remote vanilla PDB (over TCP sockets) *done right*: no extras, proper handling around connection '
                 'failures and CI. Based on `pdbx <https://pypi.python.org/pypi/pdbx>`_.',
