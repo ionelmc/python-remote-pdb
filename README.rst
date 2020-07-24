@@ -11,7 +11,7 @@ Overview
       - |docs|
     * - tests
       - | |travis| |appveyor| |requires|
-        | |codecov|
+        | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
@@ -19,7 +19,7 @@ Overview
     :target: https://readthedocs.org/projects/python-remote-pdb
     :alt: Documentation Status
 
-.. |travis| image:: https://travis-ci.org/ionelmc/python-remote-pdb.svg?branch=master
+.. |travis| image:: https://api.travis-ci.org/ionelmc/python-remote-pdb.svg?branch=master
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/ionelmc/python-remote-pdb
 
@@ -31,17 +31,17 @@ Overview
     :alt: Requirements Status
     :target: https://requires.io/github/ionelmc/python-remote-pdb/requirements/?branch=master
 
-.. |codecov| image:: https://codecov.io/github/ionelmc/python-remote-pdb/coverage.svg?branch=master
+.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-remote-pdb/badge.svg?branch=master&service=github
+    :alt: Coverage Status
+    :target: https://coveralls.io/r/ionelmc/python-remote-pdb
+
+.. |codecov| image:: https://codecov.io/gh/ionelmc/python-remote-pdb/branch/master/graphs/badge.svg?branch=master
     :alt: Coverage Status
     :target: https://codecov.io/github/ionelmc/python-remote-pdb
 
 .. |version| image:: https://img.shields.io/pypi/v/remote-pdb.svg
     :alt: PyPI Package latest release
     :target: https://pypi.org/project/remote-pdb
-
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-remote-pdb/v2.0.0.svg
-    :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.0.0...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/remote-pdb.svg
     :alt: PyPI Wheel
@@ -54,6 +54,11 @@ Overview
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/remote-pdb.svg
     :alt: Supported implementations
     :target: https://pypi.org/project/remote-pdb
+
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-remote-pdb/v2.0.0.svg
+    :alt: Commits since latest release
+    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.0.0...master
+
 
 
 .. end-badges

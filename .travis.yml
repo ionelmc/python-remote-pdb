@@ -1,9 +1,11 @@
 language: python
 dist: xenial
+cache: false
 env:
   global:
     - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
     - SEGFAULT_SIGNALS=all
+    - LANG=en_US.UTF-8
 matrix:
   include:
     - python: '3.6'
@@ -13,87 +15,87 @@ matrix:
       env:
         - TOXENV=docs
     - env:
-        - TOXENV=py27-plain-cover,codecov
+        - TOXENV=py27-plain-cover,codecov,coveralls
       python: '2.7'
     - env:
         - TOXENV=py27-plain-nocov
       python: '2.7'
     - env:
-        - TOXENV=py27-pdbpp-cover,codecov
+        - TOXENV=py27-pdbpp-cover,codecov,coveralls
       python: '2.7'
     - env:
         - TOXENV=py27-pdbpp-nocov
       python: '2.7'
     - env:
-        - TOXENV=py35-plain-cover,codecov
+        - TOXENV=py35-plain-cover,codecov,coveralls
       python: '3.5'
     - env:
         - TOXENV=py35-plain-nocov
       python: '3.5'
     - env:
-        - TOXENV=py35-pdbpp-cover,codecov
+        - TOXENV=py35-pdbpp-cover,codecov,coveralls
       python: '3.5'
     - env:
         - TOXENV=py35-pdbpp-nocov
       python: '3.5'
     - env:
-        - TOXENV=py36-plain-cover,codecov
+        - TOXENV=py36-plain-cover,codecov,coveralls
       python: '3.6'
     - env:
         - TOXENV=py36-plain-nocov
       python: '3.6'
     - env:
-        - TOXENV=py36-pdbpp-cover,codecov
+        - TOXENV=py36-pdbpp-cover,codecov,coveralls
       python: '3.6'
     - env:
         - TOXENV=py36-pdbpp-nocov
       python: '3.6'
     - env:
-        - TOXENV=py37-plain-cover,codecov
+        - TOXENV=py37-plain-cover,codecov,coveralls
       python: '3.7'
     - env:
         - TOXENV=py37-plain-nocov
       python: '3.7'
     - env:
-        - TOXENV=py37-pdbpp-cover,codecov
+        - TOXENV=py37-pdbpp-cover,codecov,coveralls
       python: '3.7'
     - env:
         - TOXENV=py37-pdbpp-nocov
       python: '3.7'
     - env:
-        - TOXENV=pypy-plain-cover,codecov
-      python: 'pypy2.7-6.0'
+        - TOXENV=pypy-plain-cover,codecov,coveralls
+      python: 'pypy'
     - env:
         - TOXENV=pypy-plain-nocov
-      python: 'pypy2.7-6.0'
+      python: 'pypy'
     - env:
-        - TOXENV=pypy-pdbpp-cover,codecov
-      python: 'pypy2.7-6.0'
+        - TOXENV=pypy-pdbpp-cover,codecov,coveralls
+      python: 'pypy'
     - env:
         - TOXENV=pypy-pdbpp-nocov
-      python: 'pypy2.7-6.0'
+      python: 'pypy'
     - env:
-        - TOXENV=pypy3-plain-cover,codecov
+        - TOXENV=pypy3-plain-cover,codecov,coveralls
         - TOXPYTHON=pypy3
-      python: 'pypy3.5-6.0'
+      python: 'pypy3'
     - env:
         - TOXENV=pypy3-plain-nocov
         - TOXPYTHON=pypy3
-      python: 'pypy3.5-6.0'
+      python: 'pypy3'
     - env:
-        - TOXENV=pypy3-pdbpp-cover,codecov
+        - TOXENV=pypy3-pdbpp-cover,codecov,coveralls
         - TOXPYTHON=pypy3
-      python: 'pypy3.5-6.0'
+      python: 'pypy3'
     - env:
         - TOXENV=pypy3-pdbpp-nocov
         - TOXPYTHON=pypy3
-      python: 'pypy3.5-6.0'
+      python: 'pypy3'
 before_install:
   - python --version
   - uname -a
-  - lsb_release -a
+  - lsb_release -a || true
 install:
-  - pip install tox
+  - python -mpip install --progress-bar=off tox -rci/requirements.txt
   - virtualenv --version
   - easy_install --version
   - pip --version
@@ -101,8 +103,8 @@ install:
 script:
   - tox -v
 after_failure:
-  - more .tox/log/* | cat
-  - more .tox/*/log/* | cat
+  - cat .tox/log/*
+  - cat .tox/*/log/*
 notifications:
   email:
     on_success: never

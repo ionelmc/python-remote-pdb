@@ -1,201 +1,209 @@
 version: '{branch}-{build}'
 build: off
-cache:
-  - '%LOCALAPPDATA%\pip\Cache'
 environment:
   global:
-    WITH_COMPILER: 'cmd /E:ON /V:ON /C .\ci\appveyor-with-compiler.cmd'
+    COVERALLS_EXTRAS: '-v'
+    COVERALLS_REPO_TOKEN: cZj13YMKdYQwSk9EHu9q1NwyWmsROKJXO
   matrix:
     - TOXENV: check
       TOXPYTHON: C:\Python36\python.exe
       PYTHON_HOME: C:\Python36
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py27-plain-cover,codecov'
+    - TOXENV: py27-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python27\python.exe
       PYTHON_HOME: C:\Python27
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '32'
-      WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-plain-cover,codecov'
+    - TOXENV: py27-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python27-x64\python.exe
       PYTHON_HOME: C:\Python27-x64
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '64'
       WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-plain-nocov'
+    - TOXENV: py27-plain-nocov
       TOXPYTHON: C:\Python27\python.exe
       PYTHON_HOME: C:\Python27
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '32'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py27-plain-nocov
+      TOXPYTHON: C:\Python27-x64\python.exe
+      PYTHON_HOME: C:\Python27-x64
+      PYTHON_VERSION: '2.7'
+      PYTHON_ARCH: '64'
+      WHEEL_PATH: .tox/dist
       WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-plain-nocov'
+    - TOXENV: py27-pdbpp-cover,codecov,coveralls
+      TOXPYTHON: C:\Python27\python.exe
+      PYTHON_HOME: C:\Python27
+      PYTHON_VERSION: '2.7'
+      PYTHON_ARCH: '32'
+    - TOXENV: py27-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python27-x64\python.exe
       PYTHON_HOME: C:\Python27-x64
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '64'
       WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-pdbpp-cover,codecov'
+    - TOXENV: py27-pdbpp-nocov
       TOXPYTHON: C:\Python27\python.exe
       PYTHON_HOME: C:\Python27
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '32'
-      WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-pdbpp-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py27-pdbpp-nocov
       TOXPYTHON: C:\Python27-x64\python.exe
       PYTHON_HOME: C:\Python27-x64
       PYTHON_VERSION: '2.7'
       PYTHON_ARCH: '64'
+      WHEEL_PATH: .tox/dist
       WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-pdbpp-nocov'
-      TOXPYTHON: C:\Python27\python.exe
-      PYTHON_HOME: C:\Python27
-      PYTHON_VERSION: '2.7'
-      PYTHON_ARCH: '32'
-      WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py27-pdbpp-nocov'
-      TOXPYTHON: C:\Python27-x64\python.exe
-      PYTHON_HOME: C:\Python27-x64
-      PYTHON_VERSION: '2.7'
-      PYTHON_ARCH: '64'
-      WINDOWS_SDK_VERSION: v7.0
-    - TOXENV: 'py35-plain-cover,codecov'
+    - TOXENV: py35-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python35\python.exe
       PYTHON_HOME: C:\Python35
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py35-plain-cover,codecov'
+    - TOXENV: py35-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python35-x64\python.exe
       PYTHON_HOME: C:\Python35-x64
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py35-plain-nocov'
+    - TOXENV: py35-plain-nocov
       TOXPYTHON: C:\Python35\python.exe
       PYTHON_HOME: C:\Python35
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py35-plain-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py35-plain-nocov
       TOXPYTHON: C:\Python35-x64\python.exe
       PYTHON_HOME: C:\Python35-x64
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py35-pdbpp-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py35-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python35\python.exe
       PYTHON_HOME: C:\Python35
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py35-pdbpp-cover,codecov'
+    - TOXENV: py35-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python35-x64\python.exe
       PYTHON_HOME: C:\Python35-x64
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py35-pdbpp-nocov'
+    - TOXENV: py35-pdbpp-nocov
       TOXPYTHON: C:\Python35\python.exe
       PYTHON_HOME: C:\Python35
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py35-pdbpp-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py35-pdbpp-nocov
       TOXPYTHON: C:\Python35-x64\python.exe
       PYTHON_HOME: C:\Python35-x64
       PYTHON_VERSION: '3.5'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py36-plain-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py36-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python36\python.exe
       PYTHON_HOME: C:\Python36
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py36-plain-cover,codecov'
+    - TOXENV: py36-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python36-x64\python.exe
       PYTHON_HOME: C:\Python36-x64
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py36-plain-nocov'
+    - TOXENV: py36-plain-nocov
       TOXPYTHON: C:\Python36\python.exe
       PYTHON_HOME: C:\Python36
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py36-plain-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py36-plain-nocov
       TOXPYTHON: C:\Python36-x64\python.exe
       PYTHON_HOME: C:\Python36-x64
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py36-pdbpp-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py36-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python36\python.exe
       PYTHON_HOME: C:\Python36
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py36-pdbpp-cover,codecov'
+    - TOXENV: py36-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python36-x64\python.exe
       PYTHON_HOME: C:\Python36-x64
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py36-pdbpp-nocov'
+    - TOXENV: py36-pdbpp-nocov
       TOXPYTHON: C:\Python36\python.exe
       PYTHON_HOME: C:\Python36
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py36-pdbpp-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py36-pdbpp-nocov
       TOXPYTHON: C:\Python36-x64\python.exe
       PYTHON_HOME: C:\Python36-x64
       PYTHON_VERSION: '3.6'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py37-plain-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py37-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python37\python.exe
       PYTHON_HOME: C:\Python37
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py37-plain-cover,codecov'
+    - TOXENV: py37-plain-cover,codecov,coveralls
       TOXPYTHON: C:\Python37-x64\python.exe
       PYTHON_HOME: C:\Python37-x64
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py37-plain-nocov'
+    - TOXENV: py37-plain-nocov
       TOXPYTHON: C:\Python37\python.exe
       PYTHON_HOME: C:\Python37
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py37-plain-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py37-plain-nocov
       TOXPYTHON: C:\Python37-x64\python.exe
       PYTHON_HOME: C:\Python37-x64
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py37-pdbpp-cover,codecov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py37-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python37\python.exe
       PYTHON_HOME: C:\Python37
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py37-pdbpp-cover,codecov'
+    - TOXENV: py37-pdbpp-cover,codecov,coveralls
       TOXPYTHON: C:\Python37-x64\python.exe
       PYTHON_HOME: C:\Python37-x64
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '64'
-    - TOXENV: 'py37-pdbpp-nocov'
+    - TOXENV: py37-pdbpp-nocov
       TOXPYTHON: C:\Python37\python.exe
       PYTHON_HOME: C:\Python37
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '32'
-    - TOXENV: 'py37-pdbpp-nocov'
+      WHEEL_PATH: .tox/dist
+    - TOXENV: py37-pdbpp-nocov
       TOXPYTHON: C:\Python37-x64\python.exe
       PYTHON_HOME: C:\Python37-x64
       PYTHON_VERSION: '3.7'
       PYTHON_ARCH: '64'
+      WHEEL_PATH: .tox/dist
 init:
   - ps: echo $env:TOXENV
   - ps: ls C:\Python*
 install:
-  - python -u ci\appveyor-bootstrap.py
+  - '%PYTHON_HOME%\python -mpip install --progress-bar=off tox -rci/requirements.txt'
   - '%PYTHON_HOME%\Scripts\virtualenv --version'
   - '%PYTHON_HOME%\Scripts\easy_install --version'
   - '%PYTHON_HOME%\Scripts\pip --version'
   - '%PYTHON_HOME%\Scripts\tox --version'
 test_script:
-  - '%WITH_COMPILER% %PYTHON_HOME%\Scripts\tox'
-
+  - cmd /E:ON /V:ON /C .\ci\appveyor-with-compiler.cmd %PYTHON_HOME%\Scripts\tox
 on_failure:
   - ps: dir "env:"
   - ps: get-content .tox\*\log\*
-artifacts:
-  - path: dist\*
 
 ### To enable remote debugging uncomment this (also, see: http://www.appveyor.com/docs/how-to/rdp-to-build-worker):
 # on_finish:
