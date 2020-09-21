@@ -80,7 +80,9 @@ class RemotePdb(Pdb):
     active_instance = None
 
     def __init__(
-        self, host, port=None, patch_stdstreams=False, quiet=False, unixsocket=None,
+        self,
+        host='127.0.0.1', port=None,
+        patch_stdstreams=False, quiet=False, unixsocket=None,
     ):
         self._quiet = quiet
         self.unixsocket = None
@@ -94,6 +96,7 @@ class RemotePdb(Pdb):
                     pass
             listen_socket.bind(self.unixsocket)
         else:
+            assert host
             assert port is not None
             listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
