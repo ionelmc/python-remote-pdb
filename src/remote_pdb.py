@@ -3,6 +3,7 @@ from __future__ import print_function
 import errno
 import logging
 import os
+import stat
 import re
 import socket
 import sys
@@ -12,6 +13,17 @@ __version__ = '2.1.0'
 
 PY3 = sys.version_info[0] == 3
 log = logging.getLogger(__name__)
+
+
+def check_unixsocket(path):
+    # type: (str) -> bool
+    try:
+        mode = os.stat(path).st_mode
+    except (TypeError, OSError):
+        pass
+    else:
+        return stat.S_ISSOCK(mode)
+    return False
 
 
 def cry(message, stderr=sys.__stderr__):
@@ -67,13 +79,27 @@ class RemotePdb(Pdb):
     """
     active_instance = None
 
-    def __init__(self, host, port, patch_stdstreams=False, quiet=False):
+    def __init__(
+        self, host, port=None, patch_stdstreams=False, quiet=False, unixsocket=None,
+    ):
         self._quiet = quiet
-        listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
-        listen_socket.bind((host, port))
+        self.unixsocket = None
+        if unixsocket or '/' in host:
+            listen_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            self.unixsocket = unixsocket if isinstance(unixsocket, str) else host
+            if os.path.exists(self.unixsocket) and check_unixsocket(self.unixsocket):
+                try:
+                    os.remove(self.unixsocket)
+                except Exception:
+                    pass
+            listen_socket.bind(self.unixsocket)
+        else:
+            assert port is not None
+            listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+            listen_socket.bind((host, port))
         if not self._quiet:
-            cry("RemotePdb session open at %s:%s, waiting for connection ..." % listen_socket.getsockname())
+            cry("RemotePdb session open at {}, waiting for connection ...".format(listen_socket.getsockname()))
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         if not self._quiet:
@@ -104,6 +130,11 @@ class RemotePdb(Pdb):
 
     def do_quit(self, arg):
         self.__restore()
+        if self.unixsocket and check_unixsocket(self.unixsocket):
+            try:
+                os.remove(self.unixsocket)
+            except Exception:
+                pass
         return Pdb.do_quit(self, arg)
 
     do_q = do_exit = do_quit
@@ -118,7 +149,9 @@ class RemotePdb(Pdb):
                 raise
 
 
-def set_trace(host=None, port=None, patch_stdstreams=False, quiet=None):
+def set_trace(
+    host=None, port=None, patch_stdstreams=False, quiet=None, unixsocket=None,
+):
     """
     Opens a remote PDB on first available port.
     """
@@ -128,5 +161,8 @@ def set_trace(host=None, port=None, patch_stdstreams=False, quiet=None):
         port = int(os.environ.get('REMOTE_PDB_PORT', '0'))
     if quiet is None:
         quiet = bool(os.environ.get('REMOTE_PDB_QUIET', ''))
-    rdb = RemotePdb(host=host, port=port, patch_stdstreams=patch_stdstreams, quiet=quiet)
+    rdb = RemotePdb(
+        host=host, port=port,
+        patch_stdstreams=patch_stdstreams, quiet=quiet, unixsocket=unixsocket,
+    )
     rdb.set_trace(frame=sys._getframe().f_back)
