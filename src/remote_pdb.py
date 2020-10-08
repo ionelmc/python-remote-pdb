@@ -102,7 +102,10 @@ class RemotePdb(Pdb):
             listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
             listen_socket.bind((host, port))
         if not self._quiet:
-            cry("RemotePdb session open at {}, waiting for connection ...".format(listen_socket.getsockname()))
+            if self.unixsocket is None:
+                cry("RemotePdb session open at {}:{}, waiting for connection ...".format(*listen_socket.getsockname()))
+            else:
+                cry("RemotePdb session open at {}, waiting for connection ...".format(listen_socket.getsockname()))
         listen_socket.listen(1)
         connection, address = listen_socket.accept()
         if not self._quiet:
