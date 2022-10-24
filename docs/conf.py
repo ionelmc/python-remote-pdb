@@ -17,7 +17,7 @@ extensions = [
 source_suffix = '.rst'
 master_doc = 'index'
 project = 'remote-pdb'
-year = '2014-2020'
+year = '2014-2022'
 author = 'Ionel Cristian Mărieș'
 copyright = '{0}, {1}'.format(year, author)
 version = release = '2.1.0'
@@ -28,17 +28,17 @@ extlinks = {
     'issue': ('https://github.com/ionelmc/python-remote-pdb/issues/%s', '#'),
     'pr': ('https://github.com/ionelmc/python-remote-pdb/pull/%s', 'PR #'),
 }
-html_theme = "sphinx_py3doc_enhanced_theme"
+html_theme = 'sphinx_py3doc_enhanced_theme'
 html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
 html_theme_options = {
-    'githuburl': 'https://github.com/ionelmc/python-remote-pdb/'
+    'githuburl': 'https://github.com/ionelmc/python-remote-pdb/',
 }
 
 html_use_smartypants = True
 html_last_updated_fmt = '%b %d, %Y'
 html_split_index = False
 html_sidebars = {
-   '**': ['searchbox.html', 'globaltoc.html', 'sourcelink.html'],
+    '**': ['searchbox.html', 'globaltoc.html', 'sourcelink.html'],
 }
 html_short_title = '%s-%s' % (project, version)
 

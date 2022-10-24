@@ -10,32 +10,28 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |appveyor| |requires|
+      - | |github-actions| |requires|
         | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
 .. |docs| image:: https://readthedocs.org/projects/python-remote-pdb/badge/?style=flat
-    :target: https://readthedocs.org/projects/python-remote-pdb
+    :target: https://python-remote-pdb.readthedocs.io/
     :alt: Documentation Status
 
-.. |travis| image:: https://api.travis-ci.org/ionelmc/python-remote-pdb.svg?branch=master
-    :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/ionelmc/python-remote-pdb
+.. |github-actions| image:: https://github.com/ionelmc/python-remote-pdb/actions/workflows/github-actions.yml/badge.svg
+    :alt: GitHub Actions Build Status
+    :target: https://github.com/ionelmc/python-remote-pdb/actions
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/ionelmc/python-remote-pdb?branch=master&svg=true
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/ionelmc/python-remote-pdb
-
-.. |requires| image:: https://requires.io/github/ionelmc/python-remote-pdb/requirements.svg?branch=master
+.. |requires| image:: https://requires.io/github/ionelmc/python-remote-pdb/requirements.svg?branch=main
     :alt: Requirements Status
-    :target: https://requires.io/github/ionelmc/python-remote-pdb/requirements/?branch=master
+    :target: https://requires.io/github/ionelmc/python-remote-pdb/requirements/?branch=main
 
-.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-remote-pdb/badge.svg?branch=master&service=github
+.. |coveralls| image:: https://coveralls.io/repos/ionelmc/python-remote-pdb/badge.svg?branch=main&service=github
     :alt: Coverage Status
     :target: https://coveralls.io/r/ionelmc/python-remote-pdb
 
-.. |codecov| image:: https://codecov.io/gh/ionelmc/python-remote-pdb/branch/master/graphs/badge.svg?branch=master
+.. |codecov| image:: https://codecov.io/gh/ionelmc/python-remote-pdb/branch/main/graphs/badge.svg?branch=main
     :alt: Coverage Status
     :target: https://codecov.io/github/ionelmc/python-remote-pdb
 
@@ -57,7 +53,7 @@ Overview
 
 .. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-remote-pdb/v2.1.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.1.0...master
+    :target: https://github.com/ionelmc/python-remote-pdb/compare/v2.1.0...main
 
 
 
