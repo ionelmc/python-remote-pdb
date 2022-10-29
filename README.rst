@@ -100,6 +100,21 @@ Note that newer Ubuntu disabled readline support in socat, so if you get
 
     rlwrap socat - tcp:127.0.0.1:4444
 
+Reverse connection
+==================
+
+install netcat on your system
+determinate your host ip (ip addr or ifconfig)
+run listener on your host ``nc -lvp 8888``
+put to code such string for reverse connection (use `reverse=True` option)
+
+.. code:: python
+
+    import remote_pdb
+    rpdb = remote_pdb.RemotePdb(host='your_host_ip', port=8888, reverse=True)
+    rpdb.set_trace()
+
+
 Using in containers
 ===================
 
